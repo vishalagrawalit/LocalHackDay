@@ -2,7 +2,7 @@ import requests
 import requests_cache
 from bs4 import BeautifulSoup
 
-
+requests.packages.urllib3.disable_warnings()
 requests_cache.install_cache('hackathon')
 
 def colors(string, color):
