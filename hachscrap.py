@@ -3,11 +3,11 @@ import json
 
 data = {}
 
-header = {'Authorization': 'ApiKey',
-        'harkirat155': '63b3040dd99d6820d23626e658843d9042ca638a'}
+
+param = {'/?username'='harkirat155','api_key'='63b3040dd99d6820d23626e658843d9042ca638a'}
 
 
-resp = requests.get('https://clist.py/api/v1/contest/', headers=header, verify=False)
+resp = requests.get('https://clist.py/api/v1/contest/', params=params)
 if resp.status_code != 200:
     # This means something went wrong.
 #    raise ApiError('GET /api/v1/contest {}'.format(resp.status_code))
