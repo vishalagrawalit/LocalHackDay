@@ -1,34 +1,28 @@
-from prettytable import PrettyTable
+import inquirer
 from MeetUp import meetup_main
+from hackathons import hackathon
 
 def start():
-    columns = ["S.No", "Event Type"]
-    table = PrettyTable(columns)
+    event_type = ["Hackathons", "Outdoors-Adventures", "Tech", "parent-Family", "Health-Wellness", "Sports-Fitness",
+                  "Education", "Photography", "Food", "Writing", "Language", "Music", "Movements",
+                  "LGBTQ", "Film", "Games-Sci-Fi", "Dancing", "Social", "Career-Business"]
 
-    event_type = ["Hackathons", "Outdoors & Adventures", "Tech", "Family", "Health & Wellness", "Sports & Fitness",
-                  "Learning", "Photography", "Food & Drinks", "Writings", "Language & Culture", "Music", "Movements",
-                  "LGBTQ", "Film", "Sci-Fi & Games", "Dance", "Social", "Career & Business"]
+    question = [inquirer.List('choice', message="Choose one from below?", choices=event_type)]
+    answer = inquirer.prompt(question)
 
-    type_url = ["outdoors-adventures", "tech", "parents-family", "health-wellness", "sports-fitness", "education",
-                "photography", "food", "writing", "language", "music", "movements", "lgbtq", "film", "games-sci-fi",
-                "dancing", "social", "career-business"]
-
-    for i in range(len(event_type)):
-        table.add_row([i+1, event_type[i]])
-
-    print(table)
-
-    print("-------------------------")
-    print("Choose the event. (Example. Enter 1 for Hackathons, 2 for Outdoors & Adventures, etc.)")
-
-    choice = int(input())
+    # type_url = ["outdoors-adventures", "tech", "parents-family", "health-wellness", "sports-fitness", "education",
+    #             "photography", "food", "writing", "language", "music", "movements", "lgbtq", "film", "games-sci-fi",
+    #             "dancing", "social", "career-business"]
 
     print("\nPlease Enter the City Name. (Example. Delhi, Mumbai, etc.)")
     city = input()
 
-    if choice>1:
-        meetup_main.make_url(city, type_url[i-2])
+    choice = answer['choice']
 
+    if choice != 'Hackathons':
+        meetup_main.make_url(city, choice)
+    else:
+        hackathon(city)
 
 if __name__ == '__main__':
     start()
