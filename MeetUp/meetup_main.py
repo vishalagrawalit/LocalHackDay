@@ -3,9 +3,7 @@ import requests
 from prettytable import PrettyTable
 
 
-def make_url():
-    genre = input()
-    city = input()
+def make_url(city, genre):
 
     url = "https://www.meetup.com/find/events/" + genre.lower() + "/?allMeetups=true&radius=Infinity&userFreeform=+" + city.lower() + "+%2C+India&mcId=z1018091&mcName=" + city.lower() + "%2C+IN"
     get_html(url)
@@ -47,6 +45,3 @@ def get_event_list(soup):
         table.add_row([i+1, groups[i][0], groups[i][1], groups[i][2]])
     '''
     print(table)
-
-
-make_url()
