@@ -69,5 +69,5 @@ def hackathon(user_city):
         if user_city.lower() == city.lower():
             events = show_events(cities[city])
             table = tabulate(events, headers=headers, tablefmt='fancy_grid')
-            print(colors(table,'32'))
+            return table
             break
