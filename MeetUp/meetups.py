@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from prettytable import PrettyTable
+from tabulate import tabulate
 
 
 def make_url(city, genre):
@@ -20,23 +20,20 @@ def get_html(url):
 def get_event_list(soup):
     data = soup.find_all('li', class_="row event-listing clearfix doc-padding ")
     columns = ["S.No", "Group", "Time", "Event Name"]
-    table = PrettyTable(columns)
-
+    table = []
     for i in range(len(data)):
-        try:
-            if i == 5:
-                break
+        if len(table) <= 5:
             new = data[i].find_all("a")
-            table.add_row([i + 1, new[1].find("span").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-16'),
-                           new[0].find("time").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-16'),
-                           new[-1].find("span").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-16')])
-        except:
-            pass
+            group = new[1].find("span").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-8')
+            time = new[0].find("time").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-8')
+            event_name = new[-1].find("span").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-8')
 
-    print(table)
+            table.append([i + 1, group, time, event_name])
+
+    print(tabulate(table, headers=columns, tablefmt='fancy_grid'))
+
 
 def main(city, genre):
     url = make_url(city, genre)
     soup = get_html(url)
-
     get_event_list(soup)
