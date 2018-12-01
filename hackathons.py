@@ -1,5 +1,7 @@
 import os
 import requests
+from common import make_soup
+from common import colors
 from tabulate import tabulate
 from bs4 import BeautifulSoup
 
@@ -15,19 +17,12 @@ def location():
     return data['city']
 
 
-def make_soup(url):
-    response = requests.get(url, verify=False).content
-    soup = BeautifulSoup(response, 'lxml')
-
-    return soup
-
-
 def find_city():
     """Make a dictionary with city names
     """
     cities = {}
     soup = make_soup(URL)
-    links = soup.find_all('a', {'class':'ht-all-card'})
+    links = soup.find_all('a', {'class': 'ht-all-card'})
     for link in links:
         name = os.path.basename(link.get('href'))
         cities[name] = link.get('href')
@@ -36,6 +31,8 @@ def find_city():
 
 
 def show_events(url):
+    """This displays the content in a tabular format
+    """
     soup = make_soup(url)
     all_dates = []
     hackathons = []
@@ -63,6 +60,7 @@ def show_events(url):
 
     return hackathons
 
+
 def hackathon(user_city):
     headers = ['Name', 'URL', 'Date']
     user_city = user_city.replace(" ", "")
@@ -70,6 +68,6 @@ def hackathon(user_city):
     for city in cities:
         if user_city.lower() == city.lower():
             events = show_events(cities[city])
-            print(tabulate(events, headers=headers, tablefmt='fancy_grid'))
+            table = tabulate(events, headers=headers, tablefmt='fancy_grid')
+            print(colors(table,'32'))
             break
-

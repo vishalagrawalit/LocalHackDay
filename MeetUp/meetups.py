@@ -1,20 +1,6 @@
-from bs4 import BeautifulSoup
-import requests
+from common import make_soup
+from common import colors
 from tabulate import tabulate
-
-
-def make_url(city, genre):
-    url = "https://www.meetup.com/find/events/" + genre.lower() + "/?allMeetups=true&radius=Infinity&userFreeform=+" + \
-        city.lower() + "+%2C+India&mcId=z1018091&mcName=" + city.lower() + "%2C+IN"
-
-    return url
-
-
-def get_html(url):
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, "html.parser")
-
-    return soup
 
 
 def get_event_list(soup):
@@ -30,10 +16,12 @@ def get_event_list(soup):
 
             table.append([i + 1, group, time, event_name])
 
-    print(tabulate(table, headers=columns, tablefmt='fancy_grid'))
+    print(colors(tabulate(table, headers=columns, tablefmt='fancy_grid')), 32)
 
 
 def main(city, genre):
-    url = make_url(city, genre)
-    soup = get_html(url)
+    url = "https://www.meetup.com/find/events/" + genre.lower() + "/?allMeetups=true&radius=Infinity&userFreeform=+" + \
+        city.lower() + "+%2C+India&mcId=z1018091&mcName=" + city.lower() + "%2C+IN"
+
+    soup = make_soup(url)
     get_event_list(soup)
