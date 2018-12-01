@@ -15,8 +15,9 @@ def get_event_list(soup):
             event_name = new[-1].find("span").contents[0].encode(encoding='UTF-8', errors='strict').decode('utf-8')
 
             table.append([i + 1, group, time, event_name])
-
-    print(colors(tabulate(table, headers=columns, tablefmt='fancy_grid')), 32)
+    tables = tabulate(table, headers=columns, tablefmt='fancy_grid')
+    print(tables)
+    return tables
 
 
 def main(city, genre):

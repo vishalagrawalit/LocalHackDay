@@ -1,4 +1,6 @@
 import inquirer
+from common import colors
+from common import handle_event
 from MeetUp import meetups
 from hackathons import hackathon
 
@@ -17,9 +19,14 @@ def start():
     choice = answer['choice']
 
     if choice != 'Hackathons':
-        meetups.main(city, choice)
+        meets = meetups.main(city, choice)
+        print(colors(meets, '32'))
+        # handle_event(meets)
     else:
-        hackathon(city)
+        hack = hackathon(city)
+        print(colors(hack, '32'))
+        # handle_event(hack)
+
 
 
 if __name__ == '__main__':
