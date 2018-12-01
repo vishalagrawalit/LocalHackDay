@@ -1,26 +1,13 @@
 import requests
 
+data = []
+indata = []
 
-data = {}
+url = "https://clist.by"
 
+resp = requests.get(url).content
 
-#param = {'/?username': 'harkirat155',
-#         'api_key': '63b3040dd99d6820d23626e658843d9042ca638a'}
-
-
-resp = requests.get('https://clist.by/').content
-
-print(resp)
-
-#if resp.status_code != 200:
-    # This means something went wrong.
-    #    raise ApiError('GET /api/v1/contest {}'.format(resp.status_code))
-#    print('error')
-
-
-#with open("data_file.json", "w") as write_file:
-#    json.dump(resp, write_file)
-
+#print(resp)
 
 def get_next_target(resp):
     start_link = resp.find('<div class="row contest')
@@ -50,14 +37,14 @@ def get_all_contest(resp):
     return contest
 
 
-def crawl_web(seed, max_depth):
-    tocrawl = [seed]
-    crawled = []
-    while tocrawl:
-        page = tocrawl.pop()
-        if page not in crawled:
-            union(tocrawl, get_all_links(get_page(page)))
-            crawled.append(page)
-    return crawled
+#def crawl_page(seed, max_depth):
+#    tocrawl = [seed]
+#    crawled = []
+#    while tocrawl:
+#        page = tocrawl.pop()
+#        if page not in crawled:
+#            union(tocrawl, get_all_contest(get_page(resp)))
+#            crawled.append(page)
+#    return crawled
 
-
+print(get_all_contest(resp))
