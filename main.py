@@ -1,5 +1,5 @@
 import inquirer
-from MeetUp import meetup_main
+from MeetUp import meetups
 from hackathons import hackathon
 
 def start():
@@ -20,7 +20,7 @@ def start():
     choice = answer['choice']
 
     if choice != 'Hackathons':
-        meetup_main.make_url(city, choice)
+        meetups.main(city, choice)
     else:
         hackathon(city)
 
